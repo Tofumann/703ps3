@@ -382,5 +382,30 @@ int questionK() {
 }
 
 int questionL() {
+	Bond zeroCouponBond(0.047, 5, 100);
+	Bond couponBond(0.047, 5, 100, 0.05);
+	Bond amortizingBond(0.047, 5, 100, 0.05, true, 0.20);
+
+	double deltaYield = 0.01;
+
+	double zeroCouponPrice = zeroCouponBond.price();
+	double couponBondPrice = couponBond.price();
+	double amortizingBondPrice = amortizingBond.price();
+
+	double zeroCouponDuration = zeroCouponBond.modifiedDuration(deltaYield);
+	double couponBondDuration = couponBond.modifiedDuration(deltaYield);
+	double amortizingBondDuration = amortizingBond.modifiedDuration(deltaYield);
+
+	std::cout << "Zero Coupon Bond - Price: $" << zeroCouponPrice << ", Duration: " << zeroCouponDuration << " years" << std::endl;
+	std::cout << "Coupon Bond - Price: $" << couponBondPrice << ", Duration: " << couponBondDuration << " years" << std::endl;
+	std::cout << "Amortizing Bond - Price: $" << amortizingBondPrice << ", Duration: " << amortizingBondDuration << " years" << std::endl;
+
+	std::cout << "\nComments:" << std::endl;
+	std::cout << "1. The zero-coupon bond has its entire cash flow at maturity, so its duration is simply its maturity." << std::endl;
+	std::cout << "2. The coupon bond has intermediate cash flows in the form of coupons, which causes its duration to be less than its maturity." << std::endl;
+	std::cout << "3. The amortizing bond repays principal over time. Its duration will be between the zero-coupon and coupon bonds, as it has both intermediate and maturity cash flows." << std::endl;
+
+
+
 	return 0;
 }
