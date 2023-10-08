@@ -1,13 +1,36 @@
 #include "Bond.h"
 #include <cmath>
+#include <vector>
 
 
 
-Bond::Bond(double y, int m, double fv, double cRate) {
+Bond::Bond(double y, int m, double fv, double cRate, bool isAmortizing, double principalRepayment) {
 	yield = y;
 	maturity = m;
 	FV = fv;
 	couponRate = cRate;
+	isAmortizing_ = isAmortizing;
+	principleRepayment_ = principalRepayment;
+}
+
+std::vector<double> Bond::getAmortizingCashflows() const {
+	std::vector<double> cashflows;
+
+	if (!isAmortizing_) {
+		return cashflows;
+	}
+
+	double remainingPrincipal = FV;
+	for (int i = 1; i <= maturity; i++) {
+		double couponPayment = couponRate * FV;
+		double principalPayment = std::min(remainingPrincipal, FV * principleRepayment_);
+
+		cashflows.push_back(couponPayment + principalPayment);
+
+		remainingPrincipal -= principalPayment;
+	}
+	return cashflows;
+
 }
 
 double Bond::price() const {

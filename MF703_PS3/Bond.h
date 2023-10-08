@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 class Bond
 {
 private:
@@ -6,9 +7,12 @@ private:
 	int maturity;
 	double FV;
 	double couponRate;
+	bool isAmortizing_;
+	double principleRepayment_;
 
 public:
-	Bond(double y, int m, double fv = 100.0, double cRate = 0.0);
+	Bond(double y, int m, double fv = 100.0, double cRate = 0.0, bool isAmortizing = false, double principleRepayment = 0.0);
+
 
 	double price() const;
 	int getMaturity() const;
@@ -19,6 +23,10 @@ public:
 	double modifiedDuration(double deltaYield) const;
 
 	double convexity(double deltaYield) const;
+
+	std::vector<double> getAmortizingCashflows() const;
+
+
 
 };
 

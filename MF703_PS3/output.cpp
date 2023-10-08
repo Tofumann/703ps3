@@ -368,6 +368,16 @@ int questionJ() {
 }
 
 int questionK() {
+
+	Bond bond(0.047, 5, 100, 0.05, true, 0.20);
+
+	std::vector<double> cashflows = bond.getAmortizingCashflows();
+
+	std::cout << "Cashflows for a 5-year amortizing bond:" << std::endl;
+	for (size_t i = 0; i < cashflows.size(); i++) {
+		std::cout << "Year " << (i + 1) << ": $" << cashflows[i] << std::endl;
+	}
+
 	return 0;
 }
 
