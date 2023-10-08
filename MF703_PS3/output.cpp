@@ -36,6 +36,9 @@ int main() {
 			case 'g':questionG(); break;
 			case 'h':questionH(); break;
 			case 'i':questionI(); break;
+			case 'j':questionJ(); break;
+			case 'k':questionK(); break;
+			case 'l':questionL(); break;
 			case '0': return 0;
 			default:std::cout << "Invalid option. Try again." << std::endl;
 		}
@@ -285,7 +288,7 @@ int questionI() {
 
 	int basisPoints = 100;
 
-	double yieldChanged = static_cast<double>(basisPoints) / 10000;
+	double yieldChanged = static_cast<double>(basisPoints) / 10000.0;
 
 	Bond bond1(0.055 + yieldChanged, 1, 100);
 	Bond bond2(0.052 + yieldChanged, 2, 100);
@@ -317,5 +320,57 @@ int questionI() {
 	std::cout << "Final portfolio value after the rates sell off by " << basisPoints << " basis points: $" << finalPortfolioValue << std::endl;
 	std::cout << "Change in portfolio value: $" << (finalPortfolioValue - initialValue) << std::endl;
 
+	return 0;
+}
+
+int questionJ() {
+	int basisPoints = 100;
+
+	double yieldChanged = -static_cast<double>(basisPoints) / 10000.0;
+
+	Bond bond1(0.055 + yieldChanged, 1, 100);
+	Bond bond2(0.052 + yieldChanged, 2, 100);
+	Bond bond3(0.05 + yieldChanged, 3, 100);
+
+	Bond prevBond1(0.055, 1, 100);
+	Bond prevBond3(0.05, 3, 100);
+	Bond prevBond2(0.052, 2, 100);
+
+	double value1 = prevBond1.price();
+	double value3 = prevBond3.price();
+
+	double Duration1 = prevBond1.modifiedDuration(yieldChanged);
+	double Duration3 = prevBond3.modifiedDuration(yieldChanged);
+	double Duration2 = prevBond2.modifiedDuration(yieldChanged);
+
+	double x = (-value1 * Duration1 - value3 * Duration3) /
+		(prevBond2.price() * Duration2);
+
+	double initialValue = value1 + value3 - x * prevBond2.price();
+
+	double adjustedValue1 = bond1.price();
+	double adjustedValue2 = bond2.price() * x;
+	double adjustedValue3 = bond3.price();
+
+	double finalPortfolioValue = adjustedValue1 - adjustedValue2 + adjustedValue3;
+
+	std::cout << "Initial portfolio value: $" << initialValue << std::endl;
+	std::cout << "Final portfolio value after the rates rally by " << basisPoints <<" basis points: $" << finalPortfolioValue << std::endl;
+	std::cout << "Change in portfolio value: $" << (finalPortfolioValue - initialValue) << std::endl;
+
+	// Answer to "Is this a portfolio you would want to own?"
+	std::cout << "\nOwning this portfolio depends on one's risk appetite and market expectations. If one expects rates to decrease, this portfolio might be beneficial. However, any unexpected rise in rates can result in losses.";
+
+	// Risks of owning this portfolio
+	std::cout << "\nRisks of owning this portfolio include interest rate risk, reinvestment risk, and potential opportunity cost if the market doesn't move as anticipated." << std::endl;
+
+	return 0;
+}
+
+int questionK() {
+	return 0;
+}
+
+int questionL() {
 	return 0;
 }
