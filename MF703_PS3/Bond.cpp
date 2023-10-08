@@ -3,14 +3,25 @@
 
 
 
-Bond::Bond(double y, int m, double fv) {
+Bond::Bond(double y, int m, double fv, double cRate) {
 	yield = y;
 	maturity = m;
 	FV = fv;
+	couponRate = cRate;
 }
 
 double Bond::price() const {
-	return FV / std::pow(1 + yield, maturity);
+
+	double couponPayment = couponRate * FV;
+	double totalValue = 0;
+
+	for (int i = 1; i <= maturity; i++) {
+		totalValue += couponPayment / std::pow(1 + yield, i);
+	}
+
+	totalValue += FV / std::pow(1 + yield, maturity);
+
+	return totalValue;
 }
 
 double Bond::computeSensitivity(double delta_yield) const {
