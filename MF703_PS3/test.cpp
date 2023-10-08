@@ -31,6 +31,7 @@ int main() {
 			case 'b':questionB(); break;
 			case 'c':questionC(); break;
 			case 'd':questionD(); break;
+			case 'e':questionE(); break;
 			case '0': return 0;
 			default:std::cout << "Invalid option. Try again." << std::endl;
 		}
@@ -171,6 +172,30 @@ int questionD() {
 	}
 
 	std::cout << "\nIn general, all else equal, zero-coupon bonds tend to have higher durations than coupon bonds. This is because with zero-coupon bonds, all cash flows (the bond's face value) are received at maturity, making them more sensitive to interest rate changes. For coupon bonds, cash flows are received periodically, reducing their sensitivity to interest rate changes." << std::endl;
+
+	return 0;
+}
+
+int questionE() {
+	std::vector<Bond> bonds = {
+	Bond(0.055, 1, 100, 0.05),
+	Bond(0.052, 2, 100, 0.05),
+	Bond(0.05, 3, 100, 0.05),
+	Bond(0.047, 5, 100, 0.05),
+	Bond(0.046, 10, 100, 0.05),
+	Bond(0.048, 30 , 100, 0.05)
+	};
+
+	double deltaYield = 0.01; 
+
+	std::cout << "Convexities:" << std::endl;
+	for (auto& bond : bonds) {
+		double conv = bond.convexity(deltaYield);
+		std::cout << "Maturity: " << bond.getMaturity() << " years. "
+			<< "Convexity: " << conv << std::endl;
+	}
+
+	std::cout << "\nTypically, the convexities of bonds are positive. This means that bond prices increase at an accelerating rate as yields fall and decrease at a decelerating rate as yields rise." << std::endl;
 
 	return 0;
 }

@@ -45,6 +45,16 @@ double Bond::modifiedDuration(double deltaYield) const {
 
 }
 
+double Bond::convexity(double deltaYield) const {
+	Bond bondUp(yield + deltaYield, maturity, FV, couponRate);
+	Bond bondDown(yield - deltaYield, maturity, FV, couponRate);
+
+	double priceUp = bondUp.price();
+	double priceDown = bondDown.price();
+	double inititalPrice = this-> price();
+
+	return (priceDown + priceUp - 2 * inititalPrice) / (inititalPrice * std::pow(deltaYield, 2));
+}
 
 int Bond::getMaturity() const {
 	return maturity;

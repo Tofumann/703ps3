@@ -18,7 +18,7 @@ public:
 	double computeSensitivity(double deltaYield) const;
 	double modifiedDuration(double deltaYield) const;
 
-
+	double convexity(double deltaYield) const;
 
 };
 
