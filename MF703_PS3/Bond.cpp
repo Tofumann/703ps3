@@ -62,6 +62,5 @@ int Bond::getMaturity() const {
 
 double Bond::getYield() const {
 	return yield;
-
 }
 
