@@ -24,17 +24,26 @@ double Bond::price() const {
 	return totalValue;
 }
 
-double Bond::computeSensitivity(double delta_yield) const {
-	Bond bondDecreasedYield(yield - delta_yield, maturity, FV);
-	Bond bondIncreasedYield(yield + delta_yield, maturity, FV);
+double Bond::computeSensitivity(double deltaYield) const {
+	Bond bondDecreasedYield(yield - deltaYield, maturity, FV);
+	Bond bondIncreasedYield(yield + deltaYield, maturity, FV);
 
 	double priceDecreasedYield = bondDecreasedYield.price();
 	double priceIncreasedYield = bondIncreasedYield.price();
 
-	return (priceDecreasedYield - priceIncreasedYield) / (2.0 * delta_yield);
+	return (priceDecreasedYield - priceIncreasedYield) / (2.0 * deltaYield);
 }
 
+double Bond::modifiedDuration(double deltaYield) const {
+	Bond bondUp(yield + deltaYield, maturity, FV, couponRate);
+	Bond bondDown(yield - deltaYield, maturity, FV, couponRate);
 
+	double priceUp = bondUp.price(); 
+	double priceDown = bondDown.price();
+
+	return (priceDown - priceUp) / (2 * this->price() * deltaYield);
+
+}
 
 
 int Bond::getMaturity() const {

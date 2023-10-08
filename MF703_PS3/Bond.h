@@ -13,8 +13,10 @@ public:
 	double price() const;
 	int getMaturity() const;
 	double getYield() const;
+	
 
-	double computeSensitivity(double delta_yield) const;
+	double computeSensitivity(double deltaYield) const;
+	double modifiedDuration(double deltaYield) const;
 
 
 

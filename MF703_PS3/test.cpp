@@ -30,6 +30,7 @@ int main() {
 			case 'a':questionA(); break;
 			case 'b':questionB(); break;
 			case 'c':questionC(); break;
+			case 'd':questionD(); break;
 			case '0': return 0;
 			default:std::cout << "Invalid option. Try again." << std::endl;
 		}
@@ -129,6 +130,47 @@ int questionC() {
 	}
 
 	std::cout << "\nPrices differ based on the present value of future cash flows. Bonds yielding closer to the coupon rate tend to be priced near par ($100). Bonds with a yield greater than the coupon rate will be priced below par and vice versa." << std::endl;
+
+	return 0;
+}
+
+int questionD() {
+	std::vector<Bond> bonds = {
+		Bond(0.055, 1, 100, 0.05),
+		Bond(0.052, 2, 100, 0.05),
+		Bond(0.05, 3, 100, 0.05),
+		Bond(0.047, 5, 100, 0.05),
+		Bond(0.046, 10, 100, 0.05),
+		Bond(0.048, 30 , 100, 0.05)
+	};
+
+	// Zero-coupon bonds for comparison
+	std::vector<Bond> zeroCouponBonds = {
+		Bond(0.055, 1, 100),
+		Bond(0.052, 2, 100),
+		Bond(0.05, 3, 100),
+		Bond(0.047, 5, 100),
+		Bond(0.046, 10, 100),
+		Bond(0.048, 30, 100)
+	};
+
+	double deltaYield = 0.01;
+
+	std::cout << "Modified Durations for Coupon Bonds:" << std::endl;
+	for (auto& bond : bonds) {
+		double duration = bond.modifiedDuration(deltaYield);
+		std::cout << "Maturity: " << bond.getMaturity() << " years. "
+			<< "Duration: " << duration << " years." << std::endl;
+	}
+
+	std::cout << "\nModified Durations for Zero-Coupon Bonds:" << std::endl;
+	for (auto& bond : zeroCouponBonds) {
+		double duration = bond.modifiedDuration(deltaYield);
+		std::cout << "Maturity: " << bond.getMaturity() << " years. "
+			<< "Duration: " << duration << " years." << std::endl;
+	}
+
+	std::cout << "\nIn general, all else equal, zero-coupon bonds tend to have higher durations than coupon bonds. This is because with zero-coupon bonds, all cash flows (the bond's face value) are received at maturity, making them more sensitive to interest rate changes. For coupon bonds, cash flows are received periodically, reducing their sensitivity to interest rate changes." << std::endl;
 
 	return 0;
 }
