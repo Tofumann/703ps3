@@ -33,6 +33,7 @@ int main() {
 			case 'd':questionD(); break;
 			case 'e':questionE(); break;
 			case 'f':questionF(); break;
+			case 'g':questionG(); break;
 			case '0': return 0;
 			default:std::cout << "Invalid option. Try again." << std::endl;
 		}
@@ -209,6 +210,48 @@ int questionF() {
 	double portfolioValue = bond1.price() - 2 * bond2.price() + bond3.price();
 
 	std::cout << "The initial value of the portfolio is: $" << portfolioValue << std::endl;
+
+	return 0;
+}
+
+int questionG() {
+	Bond bond1(0.055, 1, 100);  // 1-year zero-coupon bond
+	Bond bond2(0.052, 2, 100);  // 2-year zero-coupon bond
+	Bond bond3(0.05, 3, 100);   // 3-year zero-coupon bond
+
+	double deltaYield = 0.01;
+
+	double value1 = bond1.price();
+	double value2 = -2 * bond2.price();
+	double value3 = bond3.price();
+
+	double portfolioValue = value1 + value2 + value3;
+
+	double weights1 = value1 / portfolioValue;
+	double weights2 = value2 / portfolioValue;
+	double weights3 = value3 / portfolioValue;
+
+	double portfolioDuration = weights1 * bond1.modifiedDuration(deltaYield) + 
+								weights2 * bond2.modifiedDuration(deltaYield) + 
+								weights3 * bond3.modifiedDuration(deltaYield);
+
+	double portfolioConvexity = weights1 * bond1.convexity(deltaYield) +
+								weights2 * bond2.convexity(deltaYield) +
+								weights3 * bond3.convexity(deltaYield);
+
+
+	std::cout << "The duration of the portfolio is: " << portfolioDuration << " years." << std::endl;
+	std::cout << "The convexity of the portfolio is: " << portfolioConvexity << std::endl;
+
+	if (portfolioDuration > portfolioConvexity) {
+		std::cout << "The duration is bigger than the convexity." << std::endl;
+	}
+	else if (portfolioDuration < portfolioConvexity) {
+		std::cout << "The convexity is bigger than the duration." << std::endl;
+	}
+	else {
+		std::cout << "The duration and convexity are equal." << std::endl;
+	}
 
 	return 0;
 }
