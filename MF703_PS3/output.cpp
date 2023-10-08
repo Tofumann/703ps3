@@ -32,6 +32,7 @@ int main() {
 			case 'c':questionC(); break;
 			case 'd':questionD(); break;
 			case 'e':questionE(); break;
+			case 'f':questionF(); break;
 			case '0': return 0;
 			default:std::cout << "Invalid option. Try again." << std::endl;
 		}
@@ -196,6 +197,18 @@ int questionE() {
 	}
 
 	std::cout << "\nTypically, the convexities of bonds are positive. This means that bond prices increase at an accelerating rate as yields fall and decrease at a decelerating rate as yields rise." << std::endl;
+
+	return 0;
+}
+
+int questionF() {
+	Bond bond1(0.055, 1, 100);  // 1-year zero-coupon bond
+	Bond bond2(0.052, 2, 100);  // 2-year zero-coupon bond
+	Bond bond3(0.05, 3, 100);   // 3-year zero-coupon bond
+
+	double portfolioValue = bond1.price() - 2 * bond2.price() + bond3.price();
+
+	std::cout << "The initial value of the portfolio is: $" << portfolioValue << std::endl;
 
 	return 0;
 }

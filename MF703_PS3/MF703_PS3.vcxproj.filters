@@ -23,7 +23,7 @@
     <ClCompile Include="Bond.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="output.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
