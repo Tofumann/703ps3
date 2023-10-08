@@ -34,6 +34,7 @@ int main() {
 			case 'e':questionE(); break;
 			case 'f':questionF(); break;
 			case 'g':questionG(); break;
+			case 'h':questionH(); break;
 			case '0': return 0;
 			default:std::cout << "Invalid option. Try again." << std::endl;
 		}
@@ -203,9 +204,9 @@ int questionE() {
 }
 
 int questionF() {
-	Bond bond1(0.055, 1, 100);  // 1-year zero-coupon bond
-	Bond bond2(0.052, 2, 100);  // 2-year zero-coupon bond
-	Bond bond3(0.05, 3, 100);   // 3-year zero-coupon bond
+	Bond bond1(0.055, 1, 100);  
+	Bond bond2(0.052, 2, 100);  
+	Bond bond3(0.05, 3, 100);   
 
 	double portfolioValue = bond1.price() - 2 * bond2.price() + bond3.price();
 
@@ -215,9 +216,9 @@ int questionF() {
 }
 
 int questionG() {
-	Bond bond1(0.055, 1, 100);  // 1-year zero-coupon bond
-	Bond bond2(0.052, 2, 100);  // 2-year zero-coupon bond
-	Bond bond3(0.05, 3, 100);   // 3-year zero-coupon bond
+	Bond bond1(0.055, 1, 100);  
+	Bond bond2(0.052, 2, 100);  
+	Bond bond3(0.05, 3, 100);   
 
 	double deltaYield = 0.01;
 
@@ -252,6 +253,29 @@ int questionG() {
 	else {
 		std::cout << "The duration and convexity are equal." << std::endl;
 	}
+
+	return 0;
+}
+
+int questionH() {
+	Bond bond1(0.055, 1, 100);  
+	Bond bond3(0.05, 3, 100);   
+	Bond bond2(0.052, 2, 100);  
+
+	double deltaYield = 0.01;  
+
+	double value1 = bond1.price();
+	double value3 = bond3.price();
+
+	double D1 = bond1.modifiedDuration(deltaYield);
+	double D3 = bond3.modifiedDuration(deltaYield);
+	double D2 = bond2.modifiedDuration(deltaYield);
+
+	// Solve for x (number of units of bond2) such that portfolio duration is zero
+	// Dp = w1*D1 + x*w2*D2 + w3*D3 = 0
+	double x = (-value1 * D1 - value3 * D3) / (bond2.price() * D2);
+
+	std::cout << "To make the portfolio duration neutral, " << x << " units of the 2-year zero-coupon bond are required." << std::endl;
 
 	return 0;
 }
